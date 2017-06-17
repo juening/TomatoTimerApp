@@ -9,13 +9,13 @@ class Nav extends Component{
           <ul className="menu">
             <li className="menu-text">React Tomato Timer</li>
             <li>
-              <IndexLink activeClassName='active-link' activeStyle={{fontWeight: 'bold'}} to="/">React Tomato Timer</IndexLink>
+              <IndexLink activeClassName='active-link' to="/">React Tomato Timer</IndexLink>
             </li>
             <li>
-              <Link activeClassName='active-link' activeStyle={{fontWeight: 'bold'}} to="timer">Timer</Link>
+              <Link activeClassName='active-link' to="timer">Timer</Link>
             </li>
             <li>
-              <Link activeClassName='active-link' activeStyle={{fontWeight: 'bold'}} to="countdown">Countdown</Link>
+              <Link activeClassName='active-link' to="countdown">Countdown</Link>
             </li>
           </ul>
         </div>
@@ -23,7 +23,7 @@ class Nav extends Component{
           <ul className="menu">
             <li className="menu-text">Created by <a href="http://jueningweb.com" target="_blank">Jue Ning</a></li>
           </ul>
-      
+
         </div>
       </div>
     );
