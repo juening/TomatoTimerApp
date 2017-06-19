@@ -28329,28 +28329,31 @@
 	
 	    var _this = _possibleConstructorReturn(this, (CountdownForm.__proto__ || Object.getPrototypeOf(CountdownForm)).call(this, props));
 	
-	    _this.onFormSubmit = _this.onFormSubmit.bind(_this);
 	    _this.state = {
 	      seconds: 'Enter the seconds'
 	    };
 	    _this.onChange = _this.onChange.bind(_this);
+	    _this.onFormSubmit = _this.onFormSubmit.bind(_this);
 	    return _this;
 	  }
 	
 	  _createClass(CountdownForm, [{
 	    key: 'onChange',
 	    value: function onChange(e) {
-	      var field = e.target.value;
+	      var field = e.target.name;
 	      var seconds = this.state.seconds;
-	      seconds = parseInt(e.target.value, 10);
+	      seconds = e.target.value;
 	      this.setState({ seconds: seconds });
 	    }
 	  }, {
 	    key: 'onFormSubmit',
 	    value: function onFormSubmit(e) {
 	      e.preventDefault();
-	      this.props.onSetCountdown(this.state.seconds);
-	      this.setState({ seconds: 0 });
+	      var strSeconds = this.state.seconds;
+	      if (strSeconds.match(/^\d+$/)) {
+	        this.props.onSetCountdown(parseInt(strSeconds, 10));
+	        this.setState({ seconds: 0 });
+	      }
 	      // e.preventDefault();
 	      // var strSeconds = this.refs.secondsInput.value;
 	      // if(strSeconds.match(/^\d+$/)){
@@ -28366,16 +28369,20 @@
 	      var onSetCountdown = this.props.onSetCountdown;
 	
 	      return _react2.default.createElement(
-	        'form',
-	        { onSubmit: this.onFormSubmit, className: 'countdown-form' },
-	        _react2.default.createElement('input', { type: 'text', placeholder: 'Enter the total seconds', onChange: this.onChange,
-	          ref: 'secondsInput', name: 'secondsInput', value: this.state.seconds, onFocus: function onFocus() {
-	            _this2.setState({ seconds: '' });
-	          } }),
+	        'div',
+	        null,
 	        _react2.default.createElement(
-	          'button',
-	          { className: 'button expanded' },
-	          'Start'
+	          'form',
+	          { onSubmit: this.onFormSubmit, className: 'countdown-form' },
+	          _react2.default.createElement('input', { type: 'text', placeholder: 'Enter the total seconds', onChange: this.onChange,
+	            ref: 'secondsInput', name: 'secondsInput', value: this.state.seconds, onFocus: function onFocus() {
+	              _this2.setState({ seconds: '' });
+	            } }),
+	          _react2.default.createElement(
+	            'button',
+	            { className: 'button expanded' },
+	            'Start'
+	          )
 	        )
 	      );
 	    }
