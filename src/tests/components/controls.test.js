@@ -21,7 +21,7 @@ describe('test controls', ()=>{
     });
 
     it('test if the start button can be rendered', () => {
-      const controls = TestUtils.renderIntoDocument(<Controls countdownStatus='stopped' />);
+      const controls = TestUtils.renderIntoDocument(<Controls countdownStatus='paused' />);
       const $el = $(ReactDOM.findDOMNode(controls));
       const $startButton = $el.find('button:contains(START)');
       expect($startButton.length).toBe(1);
