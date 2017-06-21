@@ -8,6 +8,9 @@ class Controls extends Component {
   onStatusChange(newStatus) {
     return () => {this.props.statusChange(newStatus)} ;
   }
+  componentWillReceiveProps(newProps) {
+    console.log('Component will receive props', newProps.countdownStatus);
+  }
   render() {
     const { countdownStatus } = this.props;
     const renderButton = () => {

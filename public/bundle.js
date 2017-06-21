@@ -139,9 +139,9 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	__webpack_require__(/*! style!css!node_modules/foundation-sites/dist/foundation.min.css */ 248);
+	__webpack_require__(/*! style!css!node_modules/foundation-sites/dist/foundation.min.css */ 249);
 	$(document).foundation();
-	__webpack_require__(/*! style!css!sass!../src/styles/app.scss */ 252);
+	__webpack_require__(/*! style!css!sass!../src/styles/app.scss */ 253);
 	
 	_reactDom2.default.render(_react2.default.createElement(
 	  _reactRouter.Router,
@@ -28168,7 +28168,7 @@
 	
 	var _countdownForm2 = _interopRequireDefault(_countdownForm);
 	
-	var _controls = __webpack_require__(/*! ./controls */ 254);
+	var _controls = __webpack_require__(/*! ./controls */ 248);
 	
 	var _controls2 = _interopRequireDefault(_controls);
 	
@@ -28215,6 +28215,12 @@
 	      }
 	    }
 	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      clearInterval(this.timer);
+	      this.timer = undefined;
+	    }
+	  }, {
 	    key: 'startTimer',
 	    value: function startTimer() {
 	      var _this2 = this;
@@ -28222,6 +28228,9 @@
 	      this.timer = setInterval(function () {
 	        var newCount = _this2.state.count - 1;
 	        _this2.setState({ count: newCount >= 0 ? newCount : 0 });
+	        if (newCount === 0) {
+	          _this2.setState({ countdownStatus: 'stopped' });
+	        }
 	      }, 1000);
 	    }
 	  }, {
@@ -28447,6 +28456,105 @@
 
 /***/ }),
 /* 248 */
+/*!************************************!*\
+  !*** ./src/components/controls.js ***!
+  \************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 8);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Controls = function (_Component) {
+	  _inherits(Controls, _Component);
+	
+	  function Controls(props) {
+	    _classCallCheck(this, Controls);
+	
+	    var _this = _possibleConstructorReturn(this, (Controls.__proto__ || Object.getPrototypeOf(Controls)).call(this, props));
+	
+	    _this.onStatusChange = _this.onStatusChange.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(Controls, [{
+	    key: 'onStatusChange',
+	    value: function onStatusChange(newStatus) {
+	      var _this2 = this;
+	
+	      return function () {
+	        _this2.props.statusChange(newStatus);
+	      };
+	    }
+	  }, {
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(newProps) {
+	      console.log('Component will receive props', newProps.countdownStatus);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this3 = this;
+	
+	      var countdownStatus = this.props.countdownStatus;
+	
+	      var renderButton = function renderButton() {
+	        if (countdownStatus === 'started') {
+	          return _react2.default.createElement(
+	            'button',
+	            { className: 'button secondary', onClick: _this3.onStatusChange('paused') },
+	            'PAUSE'
+	          );
+	        } else {
+	          return _react2.default.createElement(
+	            'button',
+	            { className: 'button primary', onClick: _this3.onStatusChange('started') },
+	            'START'
+	          );
+	        }
+	      };
+	
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'controls' },
+	        renderButton(),
+	        _react2.default.createElement(
+	          'button',
+	          { className: 'button hollow', onClick: this.onStatusChange('stopped') },
+	          'CLEAR'
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return Controls;
+	}(_react.Component);
+	
+	Controls.propTypes = {
+	  countdownStatus: _react.PropTypes.string.isRequired,
+	  statusChange: _react.PropTypes.func.isRequired
+	};
+	
+	exports.default = Controls;
+
+/***/ }),
+/* 249 */
 /*!************************************************************************************!*\
   !*** ./~/style-loader!./~/css-loader!./~/foundation-sites/dist/foundation.min.css ***!
   \************************************************************************************/
@@ -28455,10 +28563,10 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !../../css-loader!./foundation.min.css */ 249);
+	var content = __webpack_require__(/*! !../../css-loader!./foundation.min.css */ 250);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ../../style-loader/addStyles.js */ 251)(content, {});
+	var update = __webpack_require__(/*! ../../style-loader/addStyles.js */ 252)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -28475,13 +28583,13 @@
 	}
 
 /***/ }),
-/* 249 */
+/* 250 */
 /*!*******************************************************************!*\
   !*** ./~/css-loader!./~/foundation-sites/dist/foundation.min.css ***!
   \*******************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ../../css-loader/lib/css-base.js */ 250)();
+	exports = module.exports = __webpack_require__(/*! ../../css-loader/lib/css-base.js */ 251)();
 	// imports
 	
 	
@@ -28492,7 +28600,7 @@
 
 
 /***/ }),
-/* 250 */
+/* 251 */
 /*!**************************************!*\
   !*** ./~/css-loader/lib/css-base.js ***!
   \**************************************/
@@ -28551,7 +28659,7 @@
 
 
 /***/ }),
-/* 251 */
+/* 252 */
 /*!*************************************!*\
   !*** ./~/style-loader/addStyles.js ***!
   \*************************************/
@@ -28806,7 +28914,7 @@
 
 
 /***/ }),
-/* 252 */
+/* 253 */
 /*!*****************************************************************************!*\
   !*** ./~/style-loader!./~/css-loader!./~/sass-loader!./src/styles/app.scss ***!
   \*****************************************************************************/
@@ -28815,10 +28923,10 @@
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !../../~/css-loader!../../~/sass-loader!./app.scss */ 253);
+	var content = __webpack_require__(/*! !../../~/css-loader!../../~/sass-loader!./app.scss */ 254);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ../../~/style-loader/addStyles.js */ 251)(content, {});
+	var update = __webpack_require__(/*! ../../~/style-loader/addStyles.js */ 252)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -28835,13 +28943,13 @@
 	}
 
 /***/ }),
-/* 253 */
+/* 254 */
 /*!************************************************************!*\
   !*** ./~/css-loader!./~/sass-loader!./src/styles/app.scss ***!
   \************************************************************/
 /***/ (function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ../../~/css-loader/lib/css-base.js */ 250)();
+	exports = module.exports = __webpack_require__(/*! ../../~/css-loader/lib/css-base.js */ 251)();
 	// imports
 	
 	
@@ -28850,100 +28958,6 @@
 	
 	// exports
 
-
-/***/ }),
-/* 254 */
-/*!************************************!*\
-  !*** ./src/components/controls.js ***!
-  \************************************/
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 8);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Controls = function (_Component) {
-	  _inherits(Controls, _Component);
-	
-	  function Controls(props) {
-	    _classCallCheck(this, Controls);
-	
-	    var _this = _possibleConstructorReturn(this, (Controls.__proto__ || Object.getPrototypeOf(Controls)).call(this, props));
-	
-	    _this.onStatusChange = _this.onStatusChange.bind(_this);
-	    return _this;
-	  }
-	
-	  _createClass(Controls, [{
-	    key: 'onStatusChange',
-	    value: function onStatusChange(newStatus) {
-	      var _this2 = this;
-	
-	      return function () {
-	        _this2.props.statusChange(newStatus);
-	      };
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this3 = this;
-	
-	      var countdownStatus = this.props.countdownStatus;
-	
-	      var renderButton = function renderButton() {
-	        if (countdownStatus === 'started') {
-	          return _react2.default.createElement(
-	            'button',
-	            { className: 'button secondary', onClick: _this3.onStatusChange('paused') },
-	            'PAUSE'
-	          );
-	        } else {
-	          return _react2.default.createElement(
-	            'button',
-	            { className: 'button primary', onClick: _this3.onStatusChange('started') },
-	            'START'
-	          );
-	        }
-	      };
-	
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'controls' },
-	        renderButton(),
-	        _react2.default.createElement(
-	          'button',
-	          { className: 'button hollow', onClick: this.onStatusChange('stopped') },
-	          'CLEAR'
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return Controls;
-	}(_react.Component);
-	
-	Controls.propTypes = {
-	  countdownStatus: _react.PropTypes.string.isRequired,
-	  statusChange: _react.PropTypes.func.isRequired
-	};
-	
-	exports.default = Controls;
 
 /***/ })
 /******/ ]);
