@@ -19,6 +19,7 @@ class CountdownForm extends Component {
   onFormSubmit(e) {
     e.preventDefault();
     const strSeconds = this.state.seconds;
+    console.log('input count', $('input').length);
     if (strSeconds.match(/^\d+$/)) {
       this.props.onSetCountdown(parseInt(strSeconds, 10));
       this.setState({ seconds: 0});

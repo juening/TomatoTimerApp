@@ -6,7 +6,7 @@ import App from './components/app';
 import Timer from './components/timer';
 import Countdown from './components/countdown';
 
-require('style!css!node_modules/foundation-sites/dist/foundation.min.css');
+// require('style!css!node_modules/foundation-sites/dist/foundation.min.css');
 $(document).foundation();
 require('style!css!sass!../src/styles/app.scss');
 
